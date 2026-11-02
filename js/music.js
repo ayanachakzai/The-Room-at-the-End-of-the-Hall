@@ -15,7 +15,9 @@ export class Music {
     this.debugUpdate = debugUpdate;
     this.ready = false;
     this.lastFrame = 0;
+    this.lastDisplayUpdate = 0;
     this.frameId = null;
+    this.cancelled = false;
     this.lastCornerChange = 0;
     this.corner = "tender";
     this.pendingCorner = null;
@@ -25,7 +27,7 @@ export class Music {
 
   // This creates the synth and effects after the visitor's gesture unlocks browser audio.
   async start(firstLine) {
-    if (this.ready || !window.Tone) {
+    if (this.ready || this.cancelled || !window.Tone) {
       return;
     }
 
@@ -40,6 +42,13 @@ export class Music {
     this.volume = new Tone.Volume(-80);
     this.synth.chain(this.filter, this.reverb, this.volume, Tone.Destination);
     await this.reverb.generate();
+    if (this.cancelled) {
+      this.synth.dispose();
+      this.filter.dispose();
+      this.reverb.dispose();
+      this.volume.dispose();
+      return;
+    }
     this.ready = true;
     this.applyCue(firstLine, true);
     this.repeatId = Tone.Transport.scheduleRepeat((time) => {
@@ -114,7 +123,10 @@ export class Music {
       this.setCorner(this.pendingCorner);
     }
 
-    this.debugUpdate?.(this.getDebug());
+    if (now - this.lastDisplayUpdate >= 100) {
+      this.debugUpdate?.(this.getDebug());
+      this.lastDisplayUpdate = now;
+    }
     this.frameId = requestAnimationFrame((time) => this.animate(time));
   }
 
@@ -142,6 +154,7 @@ export class Music {
 
   // This stops scheduled notes and transport after the end fade has finished.
   stop() {
+    this.cancelled = true;
     if (!this.ready) {
       return;
     }
@@ -154,6 +167,6 @@ export class Music {
 
   // This exposes smoothed values for the hidden debug overlay.
   getDebug() {
-    return { corner: this.corner, ...this.smoothed };
+    return { corner: this.corner, ...this.smoothed, tempo: Math.round(28 + this.smoothed.pace * 56) };
   }
 }

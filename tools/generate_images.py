@@ -14,13 +14,13 @@ from PIL import Image
 # SD Turbo was the model used by the live performance.
 MODEL_ID = "stabilityai/sd-turbo"
 
-# TAESD matches the faster VAE used by the live helper when this optional flag is set.
+# TAESD matches the VAE used by the live helper and gives the selected vivid look.
 FAST_VAE_ID = "madebyollin/taesd"
 
 # SD Turbo produces its best results at its native square resolution.
 IMAGE_SIZE = 512
 
-# This keeps the original img2img approach while ensuring at least one denoising step.
+# Img2img remains available for comparison and needs at least one denoising step.
 IMAGE_STEPS = 2
 
 # This matches the live show's balance between the noise image and the prompt.
@@ -54,7 +54,7 @@ def choose_device():
     return "cpu"
 
 
-# Load an SD Turbo image-to-image or text-to-image pipeline with the full VAE by default.
+# Load an SD Turbo image-to-image or text-to-image pipeline with the selected VAE.
 def load_pipeline(device, mode, fast_vae):
     pipeline_type = AutoPipelineForImage2Image if mode == "img2img" else AutoPipelineForText2Image
     dtype = torch.float16 if device != "cpu" else torch.float32
@@ -85,7 +85,7 @@ def variant_letter(index):
 
 
 # Render one reproducible image using either the show-like img2img path or comparison txt2img.
-def generate_image(pipe, prompt, seed, mode):
+def generate_image(pipe, prompt, seed, mode, strength=IMAGE_STRENGTH):
     generator = torch.Generator(device="cpu").manual_seed(seed)
 
     if mode == "img2img":
@@ -93,7 +93,7 @@ def generate_image(pipe, prompt, seed, mode):
             prompt=prompt,
             image=make_noise_image(seed),
             num_inference_steps=IMAGE_STEPS,
-            strength=IMAGE_STRENGTH,
+            strength=strength,
             guidance_scale=GUIDANCE_SCALE,
             generator=generator,
         ).images[0]
@@ -152,9 +152,13 @@ def parse_arguments():
     parser.add_argument("--scene", help="Generate one scene id, for example scene-05")
     parser.add_argument("--variants", type=int, default=3, help="Variants per scene, default: 3")
     parser.add_argument("--seed-base", type=int, default=20260611, help="First reproducible seed")
-    parser.add_argument("--mode", choices=("img2img", "txt2img"), default="img2img")
+    parser.add_argument("--mode", choices=("img2img", "txt2img"), default="txt2img")
+    parser.add_argument("--strength", type=float, default=IMAGE_STRENGTH, help="Img2img strength, default: 0.78")
     parser.add_argument("--overwrite", action="store_true", help="Replace existing image files")
-    parser.add_argument("--fast-vae", action="store_true", help="Use TAESD instead of the default full SD Turbo VAE")
+    vae = parser.add_mutually_exclusive_group()
+    vae.add_argument("--fast-vae", action="store_true", dest="fast_vae", help="Use TAESD, the selected default")
+    vae.add_argument("--full-vae", action="store_false", dest="fast_vae", help="Compare with the full SD Turbo VAE")
+    parser.set_defaults(fast_vae=True)
     return parser.parse_args()
 
 
@@ -166,6 +170,8 @@ def main():
 
     if arguments.variants < 1 or arguments.variants > 26:
         raise ValueError("--variants must be between 1 and 26")
+    if arguments.mode == "img2img" and not 0.5 <= arguments.strength <= 1.0:
+        raise ValueError("--strength must be from 0.5 to 1.0 with two inference steps")
 
     if arguments.scene:
         scenes = [scene for scene in scenes if scene["id"] == arguments.scene]
@@ -177,7 +183,12 @@ def main():
     print(f"Using {device} with {'TAESD' if arguments.fast_vae else 'the full SD Turbo VAE'}.")
     pipe = load_pipeline(device, arguments.mode, arguments.fast_vae)
     started = time.perf_counter()
-    records = []
+    existing_records = {}
+    if SEEDS_PATH.exists():
+        previous = json.loads(SEEDS_PATH.read_text(encoding="utf-8"))
+        existing_records = {item["file"]: item for item in previous.get("images", [])}
+    records = dict(existing_records)
+    processed = 0
 
     for scene in scenes:
         scene_number = int(scene["id"].split("-")[1])
@@ -193,33 +204,41 @@ def main():
                 "mode": arguments.mode,
                 "size": IMAGE_SIZE,
                 "numInferenceSteps": IMAGE_STEPS if arguments.mode == "img2img" else 1,
-                "strength": IMAGE_STRENGTH if arguments.mode == "img2img" else None,
+                "strength": arguments.strength if arguments.mode == "img2img" else None,
                 "guidanceScale": GUIDANCE_SCALE,
                 "vae": FAST_VAE_ID if arguments.fast_vae else "full SD Turbo VAE",
             }
 
             if output_path.exists() and not arguments.overwrite:
+                if output_path.name not in existing_records:
+                    raise ValueError(f"No saved seed for {output_path.name}; use --overwrite")
                 print(f"Keeping {output_path.name}")
-                records.append(record)
+                processed += 1
                 continue
 
             image_started = time.perf_counter()
-            image = generate_image(pipe, scene["prompt"], seed, arguments.mode)
+            image = generate_image(pipe, scene["prompt"], seed, arguments.mode, arguments.strength)
             image.save(output_path, "WEBP", quality=WEBP_QUALITY, method=6)
             seconds = time.perf_counter() - image_started
             record["seconds"] = round(seconds, 2)
-            records.append(record)
+            records[output_path.name] = record
+            processed += 1
             print(f"Generated {output_path.name} in {seconds:.2f}s")
 
+    all_images_use_e = all(
+        item.get("mode") == "txt2img" and item.get("vae") == FAST_VAE_ID
+        for item in records.values()
+    )
     seeds = {
         "model": MODEL_ID,
         "device": device,
-        "images": records,
+        "selectedComparisonSetting": "E" if all_images_use_e else "mixed or custom",
+        "images": [records[name] for name in sorted(records)],
     }
     SEEDS_PATH.write_text(json.dumps(seeds, indent=2) + "\n", encoding="utf-8")
     write_contact_sheet(story, arguments.variants)
     total = time.perf_counter() - started
-    print(f"Completed {len(records)} image records in {total:.2f}s")
+    print(f"Processed {processed} images with {len(records)} seed records in {total:.2f}s")
 
 
 if __name__ == "__main__":

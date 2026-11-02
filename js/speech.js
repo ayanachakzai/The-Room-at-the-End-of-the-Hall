@@ -1,18 +1,35 @@
 // This language matches the performance's British English reading.
 const LANGUAGE = "en-GB";
 
+// This checks whether a page address can request a microphone from the browser.
+function hasMicrophoneAddress() {
+  const { protocol, hostname } = window.location;
+  return protocol === "https:"
+    || (protocol === "http:" && ["localhost", "127.0.0.1", "[::1]"].includes(hostname));
+}
+
+// These browsers expose an API that cannot reliably listen for this performance.
+function isUnsupportedBrowser() {
+  return navigator.userAgent.includes("OPR/") || Boolean(navigator.brave);
+}
+
 // This wraps browser speech recognition and restarts it after normal browser stops.
 export class SpeechRecognitionController {
   // This creates a recognition instance only when the browser provides the API.
   constructor(callbacks = {}) {
     const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     this.callbacks = callbacks;
-    this.available = Boolean(Recognition);
+    this.unavailableReason = !hasMicrophoneAddress()
+      ? "insecure"
+      : (!Recognition || isUnsupportedBrowser() ? "browser" : null);
+    this.available = !this.unavailableReason;
     this.stopped = true;
     this.denied = false;
+    this.startedOnce = false;
     this.restartDelay = 250;
     this.networkDelay = 0;
     this.restartTimer = null;
+    this.startWatchdog = null;
 
     if (!this.available) {
       return;
@@ -28,6 +45,14 @@ export class SpeechRecognitionController {
 
   // This forwards each current recognition result instead of the full session transcript.
   addListeners() {
+    this.recognition.onstart = () => {
+      this.startedOnce = true;
+      this.networkDelay = 0;
+      this.restartDelay = 250;
+      window.clearTimeout(this.startWatchdog);
+      this.callbacks.onStart?.();
+    };
+
     this.recognition.onresult = (event) => {
       for (let index = event.resultIndex; index < event.results.length; index += 1) {
         const result = event.results[index];
@@ -54,11 +79,19 @@ export class SpeechRecognitionController {
 
     this.stopped = false;
 
+    if (!this.startedOnce && !this.startWatchdog) {
+      this.startWatchdog = window.setTimeout(() => {
+        if (!this.startedOnce && !this.stopped) {
+          this.failBeforeStart("timeout");
+        }
+      }, 4000);
+    }
+
     try {
       this.recognition.start();
     } catch (error) {
       if (error.name !== "InvalidStateError") {
-        this.callbacks.onError?.(error.name);
+        this.failBeforeStart(error.name);
       }
     }
   }
@@ -67,19 +100,41 @@ export class SpeechRecognitionController {
   stop() {
     this.stopped = true;
     window.clearTimeout(this.restartTimer);
-    this.recognition?.stop();
+    window.clearTimeout(this.startWatchdog);
+    this.startWatchdog = null;
+    if (this.recognition) {
+      try {
+        this.recognition.stop();
+      } catch (error) {
+        // A browser may reject stop when recognition never actually started.
+      }
+    }
+  }
+
+  // This ends a failed first start and tells the page why listening is unavailable.
+  failBeforeStart(reason) {
+    this.stop();
+    this.callbacks.onUnavailable?.(reason);
   }
 
   // This reports permission errors and gradually retries temporary network errors.
   handleError(error) {
     if (error === "not-allowed" || error === "service-not-allowed") {
       this.denied = true;
-      this.stopped = true;
-      this.callbacks.onError?.(error);
+      if (!this.startedOnce && error === "service-not-allowed") {
+        this.failBeforeStart(error);
+      } else {
+        this.stop();
+        this.callbacks.onError?.(error);
+      }
       return;
     }
 
     if (error === "network") {
+      if (!this.startedOnce) {
+        this.failBeforeStart(error);
+        return;
+      }
       this.networkDelay = Math.min(this.networkDelay ? this.networkDelay * 2 : 1000, 10000);
       this.restartDelay = this.networkDelay;
       return;

@@ -16,7 +16,7 @@ The story, emotion values, and images are hardcoded because they were authored f
 
 ## Limitations and privacy
 
-- Only Chrome, Edge, and Safari support speech recognition. Firefox does not.
+- Use Chrome, Edge, or Safari for speech recognition. Firefox, Opera, and Brave cannot listen in this experience.
 - Chrome's speech recognition sends audio to Google's servers to turn it into text. This website records and stores nothing.
 - Accents, background noise, and fast reading can make it lose its place. It recovers on the next line.
 - Images were generated in advance with SD Turbo from the show's scene prompts. They are not generated live.
@@ -43,10 +43,10 @@ python3 tools/export_story.py
 The image generator requires a Python environment with Torch, Diffusers, Transformers, NumPy, and Pillow. On the original machine, the existing Conda base environment is used:
 
 ```sh
-conda run -n base python tools/generate_images.py
+conda run -n base python tools/generate_images.py --overwrite
 ```
 
-It makes three image variants for every scene by default. Use `--scene scene-05`, `--variants N`, `--seed-base N`, `--mode txt2img`, or `--overwrite` as needed. The default uses the full SD Turbo VAE and img2img from deterministic noise. Use `--fast-vae` to compare the faster TAESD VAE used by the live helper.
+It makes three image variants for every scene by default. Use `--scene scene-05`, `--variants N`, `--seed-base N`, or `--overwrite` as needed. The selected default is one-step text-to-image with TAESD, which gave the most vivid result in the comparison. To compare the original noise-based image-to-image method, use `--mode img2img --strength 0.78`. Use `--full-vae` to compare the full SD Turbo VAE. The five-setting review is in [tools/compare/compare.html](tools/compare/compare.html).
 
 ## Deploy
 

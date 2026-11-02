@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="A playable version of The Living Score performance.">
   <title>The Room at the End of the Hall</title>
-  <link rel="icon" href="data:,">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.png" sizes="32x32">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
@@ -17,6 +18,7 @@
       <h1>The Room at the End of the Hall</h1>
       <p>Muhammad Ayan Achakzai &amp; Maria Naqvi</p>
     </div>
+    <span class="next-arrow" aria-hidden="true">-&gt;</span>
   </main>
 
   <section id="begin-screen" class="screen" tabindex="0" aria-label="Begin the performance">
@@ -25,12 +27,13 @@
       <div class="instructions">
         <p>Read each line out loud.</p>
         <p>Wear headphones, so the microphone hears your voice and not the music.</p>
-        <p>Use Google Chrome, Microsoft Edge or Safari. Firefox can't listen to your voice.</p>
+        <p>Use Google Chrome, Microsoft Edge or Safari. Firefox, Opera and Brave can't listen to your voice.</p>
         <p>Use a laptop or desktop computer.</p>
         <p>Allow microphone access when your browser asks.</p>
         <p>Find a quiet room and read at a natural pace.</p>
       </div>
     </div>
+    <span class="next-arrow" aria-hidden="true">-&gt;</span>
   </section>
 
   <section id="performance-screen" class="screen performance" aria-live="polite">
@@ -44,6 +47,12 @@
       <div id="current-line" class="current-line"></div>
       <p id="status-line" class="status-line"></p>
     </div>
+    <pre id="music-values" class="music-values" aria-hidden="true">corner   tender
+energy   0.15
+tension  0.00
+valence  0.55
+pace     0.15
+tempo    36 bpm</pre>
   </section>
 
   <section id="end-screen" class="screen end-screen">
@@ -54,6 +63,16 @@
     </div>
   </section>
 
+  <script>
+    // A local file can show this notice even when browser modules cannot load.
+    if (window.location.protocol === "file:") {
+      document.querySelector("#title-screen").classList.remove("is-visible");
+      document.querySelector("#performance-screen").classList.add("is-visible");
+      document.querySelector("#image-box").hidden = true;
+      document.querySelector("#music-values").hidden = true;
+      document.querySelector("#status-line").textContent = "Please open this page from its web address. The microphone only works over https.";
+    }
+  </script>
   <script src="vendor/tone.js"></script>
   <script type="module" src="js/main.js"></script>
 </body>

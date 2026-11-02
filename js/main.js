@@ -35,8 +35,9 @@ function createStoryView() {
   const current = document.querySelector("#current-line");
   let renderedIndex = -1;
   let words = [];
+  let pendingRender = null;
 
-  return (state) => {
+  const render = (state) => {
     previous.textContent = state.previousLine;
 
     if (state.finished || !state.line) {
@@ -47,7 +48,8 @@ function createStoryView() {
 
     if (renderedIndex !== state.activeLine) {
       current.classList.add("is-changing");
-      window.setTimeout(() => {
+      window.clearTimeout(pendingRender);
+      pendingRender = window.setTimeout(() => {
         current.textContent = "";
         words = state.line.text.split(/\s+/).map((word) => {
           const span = document.createElement("span");
@@ -65,6 +67,17 @@ function createStoryView() {
 
     words.forEach((word, index) => word.classList.toggle("is-spoken", index < state.spokenCount));
   };
+
+  // This prevents a pending line transition from repainting over an error message.
+  render.clear = () => {
+    window.clearTimeout(pendingRender);
+    pendingRender = null;
+    previous.textContent = "";
+    current.textContent = "";
+    words = [];
+    renderedIndex = -1;
+  };
+  return render;
 }
 
 // This hides the pointer after three seconds of stillness during the performance.
@@ -85,13 +98,26 @@ function addCursorTimer(performanceScreen) {
 
 // This starts the website after data has loaded and connects its small browser modules.
 async function main() {
-  const storyData = await loadStory();
   const titleScreen = document.querySelector("#title-screen");
   const beginScreen = document.querySelector("#begin-screen");
   const performanceScreen = document.querySelector("#performance-screen");
   const endScreen = document.querySelector("#end-screen");
   const status = document.querySelector("#status-line");
+  const { protocol, hostname } = window.location;
+  const addressCanListen = protocol === "https:"
+    || (protocol === "http:" && ["localhost", "127.0.0.1", "[::1]"].includes(hostname));
+
+  if (!addressCanListen) {
+    status.textContent = "Please open this page from its web address. The microphone only works over https.";
+    document.querySelector("#image-box").hidden = true;
+    document.querySelector("#music-values").hidden = true;
+    showScreen(performanceScreen);
+    return;
+  }
+
+  const storyData = await loadStory();
   const endLink = endScreen.querySelector("a");
+  const musicValues = document.querySelector("#music-values");
   endLink.href = REPOSITORY_URL;
   let started = false;
   let ending = false;
@@ -100,6 +126,19 @@ async function main() {
   let visuals;
   let speech;
   let story;
+  let speechFailed = false;
+  let renderStory;
+
+  // This replaces the reading line with a single useful message when listening fails.
+  const showListeningMessage = (message) => {
+    speechFailed = true;
+    speech?.stop();
+    music?.stop();
+    renderStory?.clear();
+    status.textContent = message;
+    musicValues.hidden = true;
+    showScreen(performanceScreen);
+  };
 
   // This waits at the final sentence before completing the specified fade sequence.
   const finishPerformance = () => {
@@ -120,7 +159,7 @@ async function main() {
   };
 
   // This renders normal story state and adds diagnostics only in explicit debug mode.
-  const renderStory = createStoryView();
+  renderStory = createStoryView();
   story = new Story(storyData.lines, {
     onView: (state) => {
       renderStory(state);
@@ -137,28 +176,41 @@ async function main() {
     onFinish: finishPerformance,
   });
   debug = new DebugOverlay(() => story.completeForDebug());
-  music = new Music(storyData.music, (values) => debug?.update({
-    corner: values.corner,
-    energy: values.energy.toFixed(2),
-    tension: values.tension.toFixed(2),
-    valence: values.valence.toFixed(2),
-    pace: values.pace.toFixed(2),
-  }));
+  music = new Music(storyData.music, (values) => {
+    musicValues.textContent = [
+      `corner   ${values.corner}`,
+      `energy   ${values.energy.toFixed(2)}`,
+      `tension  ${values.tension.toFixed(2)}`,
+      `valence  ${values.valence.toFixed(2)}`,
+      `pace     ${values.pace.toFixed(2)}`,
+      `tempo    ${values.tempo} bpm`,
+    ].join("\n");
+    debug?.update({
+      corner: values.corner,
+      energy: values.energy.toFixed(2),
+      tension: values.tension.toFixed(2),
+      valence: values.valence.toFixed(2),
+      pace: values.pace.toFixed(2),
+    });
+  });
   visuals = new Visuals(storyData.scenes);
   speech = new SpeechRecognitionController({
     onInterim: (text) => {
+      if (speechFailed) return;
       debug?.update({ interim: text });
       story.processTranscript(text, false);
     },
     onFinal: (text) => {
+      if (speechFailed) return;
       debug?.update({ final: text });
       story.processTranscript(text, true);
     },
     onError: (error) => {
       if (error === "not-allowed" || error === "service-not-allowed") {
-        status.textContent = "Microphone access is needed. Allow it in your browser settings and reload the page.";
+        showListeningMessage("Microphone access is needed. Allow it in your browser settings and reload the page.");
       }
     },
+    onUnavailable: () => showListeningMessage("This browser can't listen. Please open this page in Chrome, Edge or Safari."),
   });
   addCursorTimer(performanceScreen);
 
@@ -183,19 +235,30 @@ async function main() {
     started = true;
 
     if (!speech.available) {
-      status.textContent = "This browser can't listen. Please open this page in Chrome, Edge or Safari.";
+      const message = speech.unavailableReason === "insecure"
+        ? "Please open this page from its web address. The microphone only works over https."
+        : "This browser can't listen. Please open this page in Chrome, Edge or Safari.";
+      showListeningMessage(message);
       visuals.setScene(storyData.lines[0].sceneId);
-      showScreen(performanceScreen);
       return;
     }
 
     const audioStart = Tone.start();
     speech.start();
-    await audioStart;
-    await music.start(storyData.lines[0]);
+    if (speechFailed) {
+      return;
+    }
     visuals.setScene(storyData.lines[0].sceneId);
     story.start();
     showScreen(performanceScreen);
+    try {
+      await audioStart;
+      if (!speechFailed) {
+        await music.start(storyData.lines[0]);
+      }
+    } catch (error) {
+      showListeningMessage("This browser can't listen. Please open this page in Chrome, Edge or Safari.");
+    }
   };
 
   titleScreen.addEventListener("click", enterBegin);

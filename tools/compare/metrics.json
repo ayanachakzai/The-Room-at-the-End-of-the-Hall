@@ -1,0 +1,249 @@
+{
+  "model": "stabilityai/sd-turbo",
+  "device": "mps",
+  "size": 512,
+  "records": [
+    {
+      "setting": "A",
+      "sceneId": "scene-01",
+      "file": "scene-01-A.webp",
+      "seed": 20260611,
+      "mode": "img2img",
+      "strength": 0.78,
+      "vae": "full SD Turbo VAE",
+      "meanS": 17.76,
+      "stdV": 9.54
+    },
+    {
+      "setting": "A",
+      "sceneId": "scene-06",
+      "file": "scene-06-A.webp",
+      "seed": 20260626,
+      "mode": "img2img",
+      "strength": 0.78,
+      "vae": "full SD Turbo VAE",
+      "meanS": 16.49,
+      "stdV": 8.77
+    },
+    {
+      "setting": "A",
+      "sceneId": "scene-13",
+      "file": "scene-13-A.webp",
+      "seed": 20260647,
+      "mode": "img2img",
+      "strength": 0.78,
+      "vae": "full SD Turbo VAE",
+      "meanS": 11.21,
+      "stdV": 9.46
+    },
+    {
+      "setting": "A",
+      "sceneId": "scene-20",
+      "file": "scene-20-A.webp",
+      "seed": 20260668,
+      "mode": "img2img",
+      "strength": 0.78,
+      "vae": "full SD Turbo VAE",
+      "meanS": 25.93,
+      "stdV": 14.84
+    },
+    {
+      "setting": "B",
+      "sceneId": "scene-01",
+      "file": "scene-01-B.webp",
+      "seed": 20260611,
+      "mode": "img2img",
+      "strength": 0.78,
+      "vae": "madebyollin/taesd",
+      "meanS": 36.97,
+      "stdV": 20.81
+    },
+    {
+      "setting": "B",
+      "sceneId": "scene-06",
+      "file": "scene-06-B.webp",
+      "seed": 20260626,
+      "mode": "img2img",
+      "strength": 0.78,
+      "vae": "madebyollin/taesd",
+      "meanS": 19.57,
+      "stdV": 16.78
+    },
+    {
+      "setting": "B",
+      "sceneId": "scene-13",
+      "file": "scene-13-B.webp",
+      "seed": 20260647,
+      "mode": "img2img",
+      "strength": 0.78,
+      "vae": "madebyollin/taesd",
+      "meanS": 24.43,
+      "stdV": 15.4
+    },
+    {
+      "setting": "B",
+      "sceneId": "scene-20",
+      "file": "scene-20-B.webp",
+      "seed": 20260668,
+      "mode": "img2img",
+      "strength": 0.78,
+      "vae": "madebyollin/taesd",
+      "meanS": 29.22,
+      "stdV": 22.31
+    },
+    {
+      "setting": "C",
+      "sceneId": "scene-01",
+      "file": "scene-01-C.webp",
+      "seed": 20260611,
+      "mode": "img2img",
+      "strength": 0.9,
+      "vae": "madebyollin/taesd",
+      "meanS": 36.97,
+      "stdV": 20.81
+    },
+    {
+      "setting": "C",
+      "sceneId": "scene-06",
+      "file": "scene-06-C.webp",
+      "seed": 20260626,
+      "mode": "img2img",
+      "strength": 0.9,
+      "vae": "madebyollin/taesd",
+      "meanS": 19.57,
+      "stdV": 16.78
+    },
+    {
+      "setting": "C",
+      "sceneId": "scene-13",
+      "file": "scene-13-C.webp",
+      "seed": 20260647,
+      "mode": "img2img",
+      "strength": 0.9,
+      "vae": "madebyollin/taesd",
+      "meanS": 24.43,
+      "stdV": 15.4
+    },
+    {
+      "setting": "C",
+      "sceneId": "scene-20",
+      "file": "scene-20-C.webp",
+      "seed": 20260668,
+      "mode": "img2img",
+      "strength": 0.9,
+      "vae": "madebyollin/taesd",
+      "meanS": 29.22,
+      "stdV": 22.31
+    },
+    {
+      "setting": "D",
+      "sceneId": "scene-01",
+      "file": "scene-01-D.webp",
+      "seed": 20260611,
+      "mode": "txt2img",
+      "strength": null,
+      "vae": "full SD Turbo VAE",
+      "meanS": 141.69,
+      "stdV": 50.85
+    },
+    {
+      "setting": "D",
+      "sceneId": "scene-06",
+      "file": "scene-06-D.webp",
+      "seed": 20260626,
+      "mode": "txt2img",
+      "strength": null,
+      "vae": "full SD Turbo VAE",
+      "meanS": 117.99,
+      "stdV": 46.98
+    },
+    {
+      "setting": "D",
+      "sceneId": "scene-13",
+      "file": "scene-13-D.webp",
+      "seed": 20260647,
+      "mode": "txt2img",
+      "strength": null,
+      "vae": "full SD Turbo VAE",
+      "meanS": 62.1,
+      "stdV": 34.07
+    },
+    {
+      "setting": "D",
+      "sceneId": "scene-20",
+      "file": "scene-20-D.webp",
+      "seed": 20260668,
+      "mode": "txt2img",
+      "strength": null,
+      "vae": "full SD Turbo VAE",
+      "meanS": 31.43,
+      "stdV": 58.64
+    },
+    {
+      "setting": "E",
+      "sceneId": "scene-01",
+      "file": "scene-01-E.webp",
+      "seed": 20260611,
+      "mode": "txt2img",
+      "strength": null,
+      "vae": "madebyollin/taesd",
+      "meanS": 147.35,
+      "stdV": 56.81
+    },
+    {
+      "setting": "E",
+      "sceneId": "scene-06",
+      "file": "scene-06-E.webp",
+      "seed": 20260626,
+      "mode": "txt2img",
+      "strength": null,
+      "vae": "madebyollin/taesd",
+      "meanS": 119.03,
+      "stdV": 50.92
+    },
+    {
+      "setting": "E",
+      "sceneId": "scene-13",
+      "file": "scene-13-E.webp",
+      "seed": 20260647,
+      "mode": "txt2img",
+      "strength": null,
+      "vae": "madebyollin/taesd",
+      "meanS": 75.55,
+      "stdV": 39.49
+    },
+    {
+      "setting": "E",
+      "sceneId": "scene-20",
+      "file": "scene-20-E.webp",
+      "seed": 20260668,
+      "mode": "txt2img",
+      "strength": null,
+      "vae": "madebyollin/taesd",
+      "meanS": 38.52,
+      "stdV": 60.91
+    }
+  ],
+  "summary": {
+    "A": {
+      "meanS": 17.85,
+      "stdV": 10.65
+    },
+    "B": {
+      "meanS": 27.55,
+      "stdV": 18.82
+    },
+    "C": {
+      "meanS": 27.55,
+      "stdV": 18.82
+    },
+    "D": {
+      "meanS": 88.3,
+      "stdV": 47.63
+    },
+    "E": {
+      "meanS": 95.11,
+      "stdV": 52.03
+    }
+  }
+}

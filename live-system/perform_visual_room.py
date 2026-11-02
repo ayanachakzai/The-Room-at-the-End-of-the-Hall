@@ -21,7 +21,7 @@ GEN_SIZE = 320               # image generation size before upscaling to the win
 AUDIO_SMOOTHING = 0.1        # fraction to move toward the target emotion value each frame
 
 dot = None
-# shared state, updated by the scoring thread, read by the draw loop
+# shared state — updated by the scoring thread, read by the draw loop
 emotion = {"energy": 0.5, "tension": 0.5, "valence": 0.5, "pace": 0.5, "ms": 0.0}
 sentence_queue = queue.Queue()
 last_heard = ""
@@ -55,7 +55,7 @@ def clamp01(x, default=0.5):
 
 
 def style_words():
-    """Short mood words derived from current emotion, used to colour the image prompt."""
+    """Short mood words derived from current emotion — used to colour the image prompt."""
     v, t, e = emotion["valence"], emotion["tension"], emotion["energy"]
     if t > 0.7 and e > 0.45:
         return "ominous shadows, rain, narrow hallway"
@@ -126,7 +126,7 @@ def stt_loop():
         language="en",
         device="cpu",
         compute_type="int8",                    # reduces memory and speeds up CPU inference
-        beam_size=1,                            # greedy decoding, fastest option
+        beam_size=1,                            # greedy decoding — fastest option
         batch_size=0,
         post_speech_silence_duration=0.3,       # wait 0.3s of silence before cutting a sentence
         early_transcription_on_silence=200,     # start transcribing after 200ms of quiet mid-sentence
@@ -162,7 +162,7 @@ def rater_loop():
     while True:
         text = sentence_queue.get()
 
-        # drain stale sentences if Ollama was slow, always score the most recent line
+        # drain stale sentences if Ollama was slow — always score the most recent line
         dropped = 0
         while not sentence_queue.empty():
             try:
@@ -223,7 +223,7 @@ WAVE = {
 ADSR = {
     "grief":   (1.2, 0.4, 0.7, 3.0),
     "tender":  (1.4, 0.5, 0.45, 3.5),   # longer attack and release for a slow, warm feel
-    "tension": (0.01, 0.05, 0.95, 0.08), # almost instant attack, abrupt and nervous
+    "tension": (0.01, 0.05, 0.95, 0.08), # almost instant attack — abrupt and nervous
     "joy":     (0.03, 0.12, 0.85, 0.6),
 }
 
@@ -242,7 +242,7 @@ class LiveScore:
             load_pipe(device=DEVICE),
             gen_size=GEN_SIZE,      # image is generated at this size then upscaled to fill the window
             sim_threshold=2.0,      # skip generation if the new frame would look too similar to the last
-            max_skips=0,            # never skip, always generate
+            max_skips=0,            # never skip — always generate
         )
         self.live.warmup()          # run a dummy pass so the first real frame isn't slow
         self.layer = dot.get_layer()
@@ -253,8 +253,8 @@ class LiveScore:
         # --- audio ---
         idx = dot.music.start_poly_synth_stream(
             n_voices=8,     # 8 voices so all four chord notes can overlap during transitions
-            waveform="sine",# default waveform, overridden per chord in load_chord()
-            attack=0.8,     # slow default attack, overridden per chord
+            waveform="sine",# default waveform — overridden per chord in load_chord()
+            attack=0.8,     # slow default attack — overridden per chord
             decay=0.3,
             sustain=0.7,
             release=2.5,    # long release so notes fade out slowly
@@ -262,7 +262,7 @@ class LiveScore:
         self.synth  = dot.music.audio_outputs[idx]
         self.lpf    = self.synth.add_effect(LowPassFilter(3000, q=0.6))  # starts open; q = resonance
         self.reverb = self.synth.add_effect(Reverb(room_size=0.8, wet=0.5))  # large room, half wet
-        self.clock  = dot.music.get_clock(bpm=35)  # slow starting tempo, changed in draw()
+        self.clock  = dot.music.get_clock(bpm=35)  # slow starting tempo — changed in draw()
         self.clock.set_tpb(4)                       # 4 ticks per beat
         self.seq = Sequence(steps=4, ticks_per_step=2)  # 4-step sequence, 2 ticks per step
         self.load_chord("tender")
@@ -291,7 +291,7 @@ class LiveScore:
             for m in pitches  # all four notes at once
         ]
         for i in range(1, 4):
-            self.seq[i] = []  # leave other steps empty, one chord per cycle
+            self.seq[i] = []  # leave other steps empty — one chord per cycle
 
     def maybe_request_visual(self):
         now = time.time()
@@ -300,17 +300,17 @@ class LiveScore:
             version = scene_version
 
         if version == self.last_visual_version_pushed:
-            return  # no new scored line yet, skip
+            return  # no new scored line yet — skip
         if now - self.last_visual_push_time < VISUAL_MIN_INTERVAL:
-            return  # rate limit, don't flood the GPU with requests
+            return  # rate limit — don't flood the GPU with requests
 
-        # random noise seed, stops the image drifting into repetitive patterns over time
+        # random noise seed — stops the image drifting into repetitive patterns over time
         seed = np.random.randint(70, 145, (GEN_SIZE, GEN_SIZE, 3), dtype=np.uint8)
         strength = 0.78
         self.live.push(
             seed,
             prompt=prompt,
-            num_inference_steps=1,  # single step, relies on high strength to work well
+            num_inference_steps=1,  # single step — fast, relies on high strength to work well
             strength=strength,      # how much the prompt shapes the image vs the seed
             guidance_scale=0.0,     # classifier-free guidance doesn't work at 1 step
         )
@@ -324,14 +324,14 @@ class LiveScore:
             self.last_frame = result  # keep the last frame if no new one is ready yet
 
         if self.last_frame is not None:
-            fb = dot.width * 2  # Retina screens have a 2x framebuffer, resize to match
+            fb = dot.width * 2  # Retina screens have a 2x framebuffer — resize to match
             result_full = cv2.resize(self.last_frame, (fb, fb))
             dot.paste(result_full, (0, 0), (fb, fb))
 
     def draw(self):
         dot.background((0, 0, 0))
 
-        # exponential smoothing, moves toward the target by a fraction each frame
+        # exponential smoothing — moves toward the target by a fraction each frame
         speed = AUDIO_SMOOTHING
         self.s_energy  += (emotion["energy"]  - self.s_energy)  * speed
         self.s_tension += (emotion["tension"] - self.s_tension) * speed

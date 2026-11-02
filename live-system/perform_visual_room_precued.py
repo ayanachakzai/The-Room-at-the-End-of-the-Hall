@@ -18,9 +18,9 @@ VISUAL_MIN_INTERVAL = 0.8   # minimum seconds between image generation requests
 GEN_SIZE = 320               # image generation size before upscaling to the window
 AUDIO_SMOOTHING = 0.16       # fraction to move toward the target emotion value each frame
 
-# matching window, how far the cue engine looks from the current script position
+# matching window — how far the cue engine looks from the current script position
 LOOK_BACK = 3       # how many cues behind the current position to search
-LOOK_AHEAD = 10     # how many cues ahead to search, wider net for fast reading
+LOOK_AHEAD = 10     # how many cues ahead to search — wider net for fast reading
 MAX_SPAN = 4        # try matching up to 4 consecutive cues as a group
 MIN_MATCH_SCORE = 0.34  # below this score, stay at current position rather than jumping
 
@@ -32,7 +32,7 @@ sentence_queue = queue.Queue()
 last_heard = ""
 matched_line = ""
 match_score = 0.0
-script_index = 0  # tracks which cue we're currently at, only ever moves forward
+script_index = 0  # tracks which cue we're currently at — only ever moves forward
 
 # starts at quiet/neutral values so the performance doesn't begin too extreme
 emotion = {"energy": 0.2, "tension": 0.0, "valence": 0.5, "pace": 0.2, "ms": 0.0}
@@ -268,7 +268,7 @@ def find_best_cue(heard, current_index):
                 best_text = span_text
 
     if best_score < MIN_MATCH_SCORE:
-        # confidence too low, stay where we are rather than jumping to a wrong line
+        # confidence too low — stay where we are rather than jumping to a wrong line
         return current_index, best_score, SCRIPT_CUES[current_index]["text"]
 
     return best_j, max(0.0, min(1.0, best_score)), best_text
@@ -290,7 +290,7 @@ def stt_loop():
         language="en",
         device="cpu",
         compute_type="int8",                    # reduces memory and speeds up CPU inference
-        beam_size=1,                            # greedy decoding, fastest option
+        beam_size=1,                            # greedy decoding — fastest option
         silero_sensitivity=0.3,                  # lower = stricter, ignores more noise (added for loud performance in crypt)
         batch_size=0,
         post_speech_silence_duration=0.3,       # wait 0.3s of silence before cutting a sentence
@@ -310,11 +310,11 @@ def stt_loop():
 
 
 def cue_loop():
-    """Replaces the Ollama rater loop, matches heard text to the closest script cue
+    """Replaces the Ollama rater loop — matches heard text to the closest script cue
     and pulls pre-set emotion values and scene prompts from that cue."""
     global script_index, scene_prompt, scene_version, emotion, matched_line, match_score
 
-    print("script cue engine ready, Ollama is NOT used in this version", flush=True)
+    print("script cue engine ready — Ollama is NOT used in this version", flush=True)
 
     # load the first cue immediately so audio and visuals don't start at defaults
     first = SCRIPT_CUES[0]
@@ -327,7 +327,7 @@ def cue_loop():
         text = sentence_queue.get()
         t0 = time.time()
 
-        # drain stale sentences if matching was slow, always match the most recent line
+        # drain stale sentences if matching was slow — always match the most recent line
         dropped = 0
         while not sentence_queue.empty():
             try:
@@ -397,7 +397,7 @@ class LiveScore:
             load_pipe(device=DEVICE),
             gen_size=GEN_SIZE,      # image is generated at this size then upscaled to fill the window
             sim_threshold=2.0,      # skip generation if the new frame would look too similar to the last
-            max_skips=0,            # never skip, always generate
+            max_skips=0,            # never skip — always generate
         )
         self.live.warmup()          # run a dummy pass so the first real frame isn't slow
         self.layer = dot.get_layer()
@@ -408,8 +408,8 @@ class LiveScore:
         # --- audio ---
         idx = dot.music.start_poly_synth_stream(
             n_voices=8,     # 8 voices so all four chord notes can overlap during transitions
-            waveform="sine",# default waveform, overridden per chord in load_chord()
-            attack=0.8,     # slow default attack, overridden per chord
+            waveform="sine",# default waveform — overridden per chord in load_chord()
+            attack=0.8,     # slow default attack — overridden per chord
             decay=0.3,
             sustain=0.7,
             release=2.5,    # long release so notes fade out slowly
@@ -417,7 +417,7 @@ class LiveScore:
         self.synth = dot.music.audio_outputs[idx]
         self.lpf = self.synth.add_effect(LowPassFilter(3000, q=0.6))  # starts open; q = resonance
         self.reverb = self.synth.add_effect(Reverb(room_size=0.8, wet=0.5))  # large room, half wet
-        self.clock = dot.music.get_clock(bpm=35)  # slow starting tempo, changed in draw()
+        self.clock = dot.music.get_clock(bpm=35)  # slow starting tempo — changed in draw()
         self.clock.set_tpb(4)                      # 4 ticks per beat
         self.seq = Sequence(steps=4, ticks_per_step=2)  # 4-step sequence, 2 ticks per step
         self.load_chord(self.last_corner)
@@ -425,7 +425,7 @@ class LiveScore:
         self.clock.play()
 
     def target_corner(self):
-        # reads the corner directly from the current script cue, no calculation needed
+        # reads the corner directly from the current script cue — no calculation needed
         return SCRIPT_CUES[script_index]["corner"]
 
     def load_chord(self, corner):
@@ -438,7 +438,7 @@ class LiveScore:
             for m in pitches  # all four notes at once
         ]
         for i in range(1, 4):
-            self.seq[i] = []  # leave other steps empty, one chord per cycle
+            self.seq[i] = []  # leave other steps empty — one chord per cycle
 
     def maybe_request_visual(self):
         now = time.time()
@@ -447,16 +447,16 @@ class LiveScore:
             version = scene_version
 
         if version == self.last_visual_version_pushed:
-            return  # no new matched cue yet, skip
+            return  # no new matched cue yet — skip
         if now - self.last_visual_push_time < VISUAL_MIN_INTERVAL:
-            return  # rate limit, don't flood the GPU with requests
+            return  # rate limit — don't flood the GPU with requests
 
-        # random noise seed, stops the image drifting into repetitive patterns over time
+        # random noise seed — stops the image drifting into repetitive patterns over time
         seed = np.random.randint(70, 145, (GEN_SIZE, GEN_SIZE, 3), dtype=np.uint8)
         self.live.push(
             seed,
             prompt=prompt,
-            num_inference_steps=1,  # single step, relies on high strength to work well
+            num_inference_steps=1,  # single step — fast, relies on high strength to work well
             strength=0.78,          # how much the prompt shapes the image vs the seed
             guidance_scale=0.0,     # classifier-free guidance doesn't work at 1 step
         )
@@ -470,14 +470,14 @@ class LiveScore:
             self.last_frame = result  # keep the last frame if no new one is ready yet
 
         if self.last_frame is not None:
-            fb = dot.width * 2  # Retina screens have a 2x framebuffer, resize to match
+            fb = dot.width * 2  # Retina screens have a 2x framebuffer — resize to match
             result_full = cv2.resize(self.last_frame, (fb, fb))
             dot.paste(result_full, (0, 0), (fb, fb))
 
     def draw(self):
         dot.background((0, 0, 0))
 
-        # exponential smoothing, moves toward the target by a fraction each frame
+        # exponential smoothing — moves toward the target by a fraction each frame
         speed = AUDIO_SMOOTHING
         self.s_energy += (emotion["energy"] - self.s_energy) * speed
         self.s_tension += (emotion["tension"] - self.s_tension) * speed
@@ -506,7 +506,7 @@ class LiveScore:
 
 def main():
     global dot
-    dot = Dorothy(width=900, height=900, title="the living score, precued")
+    dot = Dorothy(width=900, height=900, title="the living score — precued")
     # stt and cue matching run in background threads so they don't block the Dorothy draw loop
     threading.Thread(target=stt_loop, daemon=True).start()
     threading.Thread(target=cue_loop, daemon=True).start()

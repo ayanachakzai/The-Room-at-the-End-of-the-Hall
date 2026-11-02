@@ -40,3 +40,15 @@
 - Replaced em dashes only in comments and the copied precued window title to respect the website publication rule. Runtime matching, prompt, image, and audio code was not changed.
 - Published commit `8c2d57b` to the public GitHub repository. GitHub Pages is enabled from `main` and `/`, and the first Pages build completed successfully.
 - Verified the published home page, story data, scene image, Tone.js, Google Font CSS, and font file all returned HTTP 200 over HTTPS with no browser console errors.
+
+## Fixes round 1
+
+- Compared the raw scene-01 image with the website. The image was grey in the source file. The resting image layer uses opacity 1 and has no filter or blend mode.
+- Rendered scenes 01, 06, 13, and 20 with five settings. The four-scene average saturation and value contrast were: A 17.85 and 10.65, B 27.55 and 18.82, C 27.55 and 18.82, D 88.30 and 47.63, E 95.11 and 52.03. Values use the 0 to 255 HSV scale. B and C are identical because two inference steps produce one effective img2img denoising step at either strength.
+- Chose setting E, one-step text-to-image with TAESD, for vivid color, higher contrast, and a warm painterly appearance in the sample rooms. Regenerated 81 images and kept all comparison images and measurements in `tools/compare/`.
+- Added browser and address checks, a four-second recognition start watchdog, arrow hints, smoothed music values, and black SVG and PNG favicons.
+- Restored both copied live-system scripts byte for byte from their originals, including historical comments and title.
+- The Special Elite font file has no U+2192 glyph, so the arrow hint uses the typed characters `->` in that font. The arrow is static when reduced motion is preferred.
+- The first browser check found that a pending line render could repaint the story after microphone denial. Clearing that timer fixed the failure screen.
+- Re-tested the 16 Python matcher parity pairs and all simulated reading scenarios. Both Node tests passed.
+- Browser checks passed for Brave, Opera, a recognition start timeout, network failure before start, immediate and delayed microphone denial, a local file URL, and music value layout at 1280 by 720, 1440 by 900, 1920 by 1080, and 680 by 900.
