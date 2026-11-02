@@ -9,15 +9,16 @@ These are copies of the two original Python entry points used while making The L
 
 ## Requirements
 
-These scripts were built for macOS on Apple Silicon and use the MPS device. They need Python packages including RealtimeSTT, Dorothy, Diffusers, Torch, OpenCV through `opencv-python`, NumPy, and Pillow. The earlier `perform_visual_room.py` also needs Ollama and its selected local model.
+These scripts were built for macOS on Apple Silicon and use the MPS device. Install the Python packages RealtimeSTT, torch, diffusers, transformers, accelerate, opencv-python, numpy and Pillow. Obtain Dorothy from the course materials. The earlier `perform_visual_room.py` also needs the Python `ollama` package, the Ollama application and its `qwen3:1.7b` model.
 
 `diffusion_utils.py` and the Dorothy library come from the Performing Data course at UAL Creative Computing Institute, taught by Louis McCallum. They are not republished here and must be obtained separately through the course material.
 
 ## Run
 
-Place the original `diffusion_utils.py` beside either entry point, install the required packages in an appropriate local Python environment, then run one of the files from Terminal:
+Place the original `diffusion_utils.py` beside these scripts and install the required packages in an appropriate local Python environment. From the repository root, run:
 
 ```sh
+cd live-system
 python perform_visual_room_precued.py
 ```
 
@@ -26,5 +27,7 @@ or:
 ```sh
 python perform_visual_room.py
 ```
+
+For the earlier version, install and start Ollama first, then run `ollama pull qwen3:1.7b` before starting the Python script.
 
 The scripts require microphone access, a working audio device, and a local setup compatible with the original course dependencies.
