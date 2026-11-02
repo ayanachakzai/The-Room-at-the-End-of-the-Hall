@@ -38,3 +38,5 @@
 
 - Copied the two original Python entry points into `live-system/` and did not copy the course-provided `diffusion_utils.py` helper.
 - Replaced em dashes only in comments and the copied precued window title to respect the website publication rule. Runtime matching, prompt, image, and audio code was not changed.
+- Published commit `8c2d57b` to the public GitHub repository. GitHub Pages is enabled from `main` and `/`, and the first Pages build completed successfully.
+- Verified the published home page, story data, scene image, Tone.js, Google Font CSS, and font file all returned HTTP 200 over HTTPS with no browser console errors.
