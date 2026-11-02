@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A playable version of The Living Score performance.">
+  <title>The Room at the End of the Hall</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="title-screen" class="screen is-visible" tabindex="0" aria-label="Enter">
+    <div class="title-copy">
+      <h1>The Room at the End of the Hall</h1>
+      <p>Muhammad Ayan Achakzai &amp; Maria Naqvi</p>
+    </div>
+  </main>
+
+  <section id="begin-screen" class="screen" tabindex="0" aria-label="Begin the performance">
+    <div class="begin-copy">
+      <h2>Before you begin</h2>
+      <div class="instructions">
+        <p>Read each line out loud.</p>
+        <p>Wear headphones, so the microphone hears your voice and not the music.</p>
+        <p>Use Google Chrome, Microsoft Edge or Safari. Firefox can't listen to your voice.</p>
+        <p>Use a laptop or desktop computer.</p>
+        <p>Allow microphone access when your browser asks.</p>
+        <p>Find a quiet room and read at a natural pace.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="performance-screen" class="screen performance" aria-live="polite">
+    <div id="image-box" class="image-box">
+      <img id="image-a" class="image-layer is-front" alt="">
+      <img id="image-b" class="image-layer" alt="">
+      <p id="image-caption" class="image-caption"></p>
+    </div>
+    <div class="story-column">
+      <p id="previous-line" class="previous-line"></p>
+      <div id="current-line" class="current-line"></div>
+      <p id="status-line" class="status-line"></p>
+    </div>
+  </section>
+
+  <section id="end-screen" class="screen end-screen">
+    <div class="title-copy">
+      <h1>The Room at the End of the Hall</h1>
+      <p>Muhammad Ayan Achakzai &amp; Maria Naqvi</p>
+      <a href="https://github.com/ayanachakzai/The-Room-at-the-End-of-the-Hall">The live system is on GitHub</a>
+    </div>
+  </section>
+
+  <script src="vendor/tone.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

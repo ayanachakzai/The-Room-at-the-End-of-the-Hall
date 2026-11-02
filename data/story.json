@@ -1,0 +1,637 @@
+{
+  "title": "The Room at the End of the Hall",
+  "authors": [
+    "Muhammad Ayan Achakzai",
+    "Maria Naqvi"
+  ],
+  "visualStyle": "cinematic memory, painterly film still, soft grain, no text",
+  "scenes": [
+    {
+      "id": "scene-01",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, a yellow bright quiet west-facing room at the end of a hallway, old books by a window sill, cardamom tea being brewed, a teapot steaming on the stove, golden afternoon light rushing into a rustic wooden home library full of books",
+      "short": "a yellow bright quiet west-facing room"
+    },
+    {
+      "id": "scene-02",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, a warm kitchen memory, an old vintage radio playing music, traditional dinner on the table",
+      "short": "a warm kitchen memory, an old"
+    },
+    {
+      "id": "scene-03",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, a warm kitchen memory, an old vintage radio playing music, a mother dancing in the kitchen next to the stove, green vines growing in a kitchen setting creating a jungle of flowers with woman dancing",
+      "short": "a warm kitchen memory, an old"
+    },
+    {
+      "id": "scene-04",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, moving boxes on stairs, an emptied small bedroom, marks on a door frame keeping a children's growth chart from 4 to 17 years of age, quiet summer afternoon light, a moving truck full of brown moving boxes",
+      "short": "moving boxes on stairs, an emptied"
+    },
+    {
+      "id": "scene-05",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, a narrow winter hallway, icy trails, walls leaning inward, shadows creating empty darkness, thunder clouds approaching from the distance",
+      "short": "a narrow winter hallway, icy trails,"
+    },
+    {
+      "id": "scene-06",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, a red door open down a long hallway in a home",
+      "short": "a red door open down a"
+    },
+    {
+      "id": "scene-07",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, icy trails, isolated shadow of a human alone in an empty dark space",
+      "short": "icy trails, isolated shadow of a"
+    },
+    {
+      "id": "scene-08",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, a still barren wooden tree, branches of a winter tree without leaves",
+      "short": "a still barren wooden tree, branches"
+    },
+    {
+      "id": "scene-09",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, rain at night, thunder clouds, a front door left open, modern suburban lamp post in the residential suburban street",
+      "short": "rain at night, thunder clouds, a"
+    },
+    {
+      "id": "scene-10",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, shadows of people arguing through a window from the outside of a house in the rain at night",
+      "short": "shadows of people arguing through a"
+    },
+    {
+      "id": "scene-11",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, a red front door of a home at night in the rain open",
+      "short": "a red front door of a"
+    },
+    {
+      "id": "scene-12",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, car headlights disappearing down the residential suburban street, a singular car in a dark empty wet street",
+      "short": "car headlights disappearing down the residential"
+    },
+    {
+      "id": "scene-13",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, empty house hallway dark",
+      "short": "empty house hallway dark"
+    },
+    {
+      "id": "scene-14",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, a cold quiet bedroom with a heavy blue atmosphere",
+      "short": "a cold quiet bedroom with a"
+    },
+    {
+      "id": "scene-15",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, one cup of tea far away in an empty blue hue room, an oval picture frame on a table of a woman sitting on a desk",
+      "short": "one cup of tea far away"
+    },
+    {
+      "id": "scene-16",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, a cold quiet bedroom with a heavy blue atmosphere, one cup of tea far away in an empty blue hue room, an oval picture frame on a table of a woman sitting on a desk",
+      "short": "a cold quiet bedroom with a"
+    },
+    {
+      "id": "scene-17",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, soft returning light after winter, tiny stream of light enters blue moody empty kitchen full of dead plants and vines",
+      "short": "soft returning light after winter, tiny"
+    },
+    {
+      "id": "scene-18",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, letters in a drawer of a wooden dresser, fountain pen handwriting on parchment, Envelopes and letters opened spread across a blue kicthen floor, soft returning light after winter, tiny stream of light enters blue moody empty kitchen full of dead plants and vines",
+      "short": "letters in a drawer of a"
+    },
+    {
+      "id": "scene-19",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, golden light pouring in a dining room with small budding plants beginning to come to life",
+      "short": "golden light pouring in a dining"
+    },
+    {
+      "id": "scene-20",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, open windows in the morning with a tiny stream of light entering a blue moody bedroom",
+      "short": "open windows in the morning with"
+    },
+    {
+      "id": "scene-21",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, a woman laughing in a kitchen full of golden light",
+      "short": "a woman laughing in a kitchen"
+    },
+    {
+      "id": "scene-22",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, open windows in the morning with a tiny stream of light entering a blue moody bedroom, cardamom tea on a wooden table with flowers in a vase, music playing on a vintage radio, a woman dancing and twirling around a kitchen full of light, golden light pouring in a dining room with small budding plants beginning to come to life",
+      "short": "open windows in the morning with"
+    },
+    {
+      "id": "scene-23",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, open windows in the morning, fresh air entering the house",
+      "short": "open windows in the morning, fresh"
+    },
+    {
+      "id": "scene-24",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, cardamom tea in morning light, kitchen warmth returning",
+      "short": "cardamom tea in morning light, kitchen"
+    },
+    {
+      "id": "scene-25",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, a mother dancing in the kitchen next to the stove, green vines growing in a kitchen setting creating a jungle of flowers with woman dancing",
+      "short": "a mother dancing in the kitchen"
+    },
+    {
+      "id": "scene-26",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, the absent room at the end of the hall, memory and loss",
+      "short": "the absent room at the end"
+    },
+    {
+      "id": "scene-27",
+      "prompt": "cinematic memory, painterly film still, soft grain, no text, the rush of golden light in a room glowing inside, window with a stream of afternoon light, flower growing in a old planting pot",
+      "short": "the rush of golden light in"
+    }
+  ],
+  "lines": [
+    {
+      "index": 0,
+      "text": "There is a room I still think about.",
+      "corner": "tender",
+      "e": 0.15,
+      "t": 0.0,
+      "v": 0.55,
+      "p": 0.15,
+      "sceneId": "scene-01"
+    },
+    {
+      "index": 1,
+      "text": "It smelled of cardamom and old books.",
+      "corner": "tender",
+      "e": 0.12,
+      "t": 0.0,
+      "v": 0.62,
+      "p": 0.12,
+      "sceneId": "scene-01"
+    },
+    {
+      "index": 2,
+      "text": "The window faced west, and in the afternoons, everything went gold.",
+      "corner": "tender",
+      "e": 0.15,
+      "t": 0.0,
+      "v": 0.72,
+      "p": 0.15,
+      "sceneId": "scene-01"
+    },
+    {
+      "index": 3,
+      "text": "I didn't know it wouldn't always be like this.",
+      "corner": "grief",
+      "e": 0.18,
+      "t": 0.25,
+      "v": 0.38,
+      "p": 0.18,
+      "sceneId": "scene-01"
+    },
+    {
+      "index": 4,
+      "text": "We used to eat dinner with the radio on.",
+      "corner": "tender",
+      "e": 0.3,
+      "t": 0.0,
+      "v": 0.72,
+      "p": 0.28,
+      "sceneId": "scene-02"
+    },
+    {
+      "index": 5,
+      "text": "My mother would dance between the stove and the table.",
+      "corner": "joy",
+      "e": 0.58,
+      "t": 0.0,
+      "v": 0.88,
+      "p": 0.55,
+      "sceneId": "scene-03"
+    },
+    {
+      "index": 6,
+      "text": "Badly. Wonderfully badly.",
+      "corner": "joy",
+      "e": 0.7,
+      "t": 0.0,
+      "v": 0.95,
+      "p": 0.7,
+      "sceneId": "scene-03"
+    },
+    {
+      "index": 7,
+      "text": "The whole house felt warm.",
+      "corner": "tender",
+      "e": 0.25,
+      "t": 0.0,
+      "v": 0.82,
+      "p": 0.25,
+      "sceneId": "scene-03"
+    },
+    {
+      "index": 8,
+      "text": "The summer I turned seventeen, we moved.",
+      "corner": "grief",
+      "e": 0.22,
+      "t": 0.25,
+      "v": 0.42,
+      "p": 0.22,
+      "sceneId": "scene-04"
+    },
+    {
+      "index": 9,
+      "text": "She said it was necessary.",
+      "corner": "grief",
+      "e": 0.2,
+      "t": 0.45,
+      "v": 0.32,
+      "p": 0.2,
+      "sceneId": "scene-04"
+    },
+    {
+      "index": 10,
+      "text": "I carried my things down the stairs in boxes.",
+      "corner": "grief",
+      "e": 0.25,
+      "t": 0.2,
+      "v": 0.42,
+      "p": 0.22,
+      "sceneId": "scene-04"
+    },
+    {
+      "index": 11,
+      "text": "I didn't look back.",
+      "corner": "grief",
+      "e": 0.18,
+      "t": 0.25,
+      "v": 0.28,
+      "p": 0.2,
+      "sceneId": "scene-04"
+    },
+    {
+      "index": 12,
+      "text": "The arguments started that winter.",
+      "corner": "tension",
+      "e": 0.48,
+      "t": 0.82,
+      "v": 0.18,
+      "p": 0.45,
+      "sceneId": "scene-05"
+    },
+    {
+      "index": 13,
+      "text": "Small things at first.",
+      "corner": "tension",
+      "e": 0.35,
+      "t": 0.65,
+      "v": 0.28,
+      "p": 0.32,
+      "sceneId": "scene-05"
+    },
+    {
+      "index": 14,
+      "text": "A door held too long.",
+      "corner": "tension",
+      "e": 0.4,
+      "t": 0.78,
+      "v": 0.2,
+      "p": 0.35,
+      "sceneId": "scene-06"
+    },
+    {
+      "index": 15,
+      "text": "A silence that lasted days.",
+      "corner": "tension",
+      "e": 0.25,
+      "t": 0.82,
+      "v": 0.18,
+      "p": 0.22,
+      "sceneId": "scene-07"
+    },
+    {
+      "index": 16,
+      "text": "Then bigger things.",
+      "corner": "tension",
+      "e": 0.42,
+      "t": 0.88,
+      "v": 0.12,
+      "p": 0.38,
+      "sceneId": "scene-05"
+    },
+    {
+      "index": 17,
+      "text": "I stood in the hallway one night, not moving.",
+      "corner": "tension",
+      "e": 0.32,
+      "t": 0.85,
+      "v": 0.15,
+      "p": 0.25,
+      "sceneId": "scene-08"
+    },
+    {
+      "index": 18,
+      "text": "Barely breathing.",
+      "corner": "tension",
+      "e": 0.55,
+      "t": 0.95,
+      "v": 0.05,
+      "p": 0.55,
+      "sceneId": "scene-08"
+    },
+    {
+      "index": 19,
+      "text": "The night it ended, there was rain.",
+      "corner": "tension",
+      "e": 0.45,
+      "t": 0.78,
+      "v": 0.12,
+      "p": 0.35,
+      "sceneId": "scene-09"
+    },
+    {
+      "index": 20,
+      "text": "There were voices and then there was nothing.",
+      "corner": "tension",
+      "e": 0.62,
+      "t": 0.95,
+      "v": 0.05,
+      "p": 0.62,
+      "sceneId": "scene-10"
+    },
+    {
+      "index": 21,
+      "text": "A door.",
+      "corner": "tension",
+      "e": 0.55,
+      "t": 0.88,
+      "v": 0.08,
+      "p": 0.55,
+      "sceneId": "scene-11"
+    },
+    {
+      "index": 22,
+      "text": "A car.",
+      "corner": "tension",
+      "e": 0.6,
+      "t": 0.88,
+      "v": 0.08,
+      "p": 0.6,
+      "sceneId": "scene-12"
+    },
+    {
+      "index": 23,
+      "text": "Headlights disappearing down the street.",
+      "corner": "tension",
+      "e": 0.58,
+      "t": 0.82,
+      "v": 0.1,
+      "p": 0.55,
+      "sceneId": "scene-12"
+    },
+    {
+      "index": 24,
+      "text": "I sat on the floor of the empty hallway.",
+      "corner": "grief",
+      "e": 0.12,
+      "t": 0.45,
+      "v": 0.04,
+      "p": 0.08,
+      "sceneId": "scene-13"
+    },
+    {
+      "index": 25,
+      "text": "For months after, I woke at three in the morning.",
+      "corner": "grief",
+      "e": 0.18,
+      "t": 0.25,
+      "v": 0.18,
+      "p": 0.15,
+      "sceneId": "scene-14"
+    },
+    {
+      "index": 26,
+      "text": "Smaller. Colder.",
+      "corner": "grief",
+      "e": 0.08,
+      "t": 0.1,
+      "v": 0.12,
+      "p": 0.06,
+      "sceneId": "scene-14"
+    },
+    {
+      "index": 27,
+      "text": "I learned to make my own tea.",
+      "corner": "grief",
+      "e": 0.15,
+      "t": 0.05,
+      "v": 0.32,
+      "p": 0.12,
+      "sceneId": "scene-15"
+    },
+    {
+      "index": 28,
+      "text": "I learned to sit with the silence without fighting it.",
+      "corner": "tender",
+      "e": 0.15,
+      "t": 0.0,
+      "v": 0.58,
+      "p": 0.12,
+      "sceneId": "scene-16"
+    },
+    {
+      "index": 29,
+      "text": "But slowly, the way light comes back after winter without you noticing, things began to feel possible again.",
+      "corner": "tender",
+      "e": 0.25,
+      "t": 0.0,
+      "v": 0.7,
+      "p": 0.22,
+      "sceneId": "scene-17"
+    },
+    {
+      "index": 30,
+      "text": "I found her letters in a drawer.",
+      "corner": "tender",
+      "e": 0.22,
+      "t": 0.0,
+      "v": 0.68,
+      "p": 0.2,
+      "sceneId": "scene-18"
+    },
+    {
+      "index": 31,
+      "text": "Her handwriting was terrible.",
+      "corner": "tender",
+      "e": 0.28,
+      "t": 0.0,
+      "v": 0.74,
+      "p": 0.25,
+      "sceneId": "scene-18"
+    },
+    {
+      "index": 32,
+      "text": "The last letter said: don't take any of this too seriously.",
+      "corner": "tender",
+      "e": 0.28,
+      "t": 0.0,
+      "v": 0.7,
+      "p": 0.25,
+      "sceneId": "scene-19"
+    },
+    {
+      "index": 33,
+      "text": "It's just a life. Make it yours.",
+      "corner": "tender",
+      "e": 0.35,
+      "t": 0.0,
+      "v": 0.78,
+      "p": 0.3,
+      "sceneId": "scene-20"
+    },
+    {
+      "index": 34,
+      "text": "I laughed out loud when I read that.",
+      "corner": "joy",
+      "e": 0.62,
+      "t": 0.0,
+      "v": 0.92,
+      "p": 0.6,
+      "sceneId": "scene-21"
+    },
+    {
+      "index": 35,
+      "text": "Because it was exactly what she would say.",
+      "corner": "tender",
+      "e": 0.35,
+      "t": 0.0,
+      "v": 0.78,
+      "p": 0.32,
+      "sceneId": "scene-22"
+    },
+    {
+      "index": 36,
+      "text": "I opened all the windows that morning.",
+      "corner": "tender",
+      "e": 0.35,
+      "t": 0.0,
+      "v": 0.82,
+      "p": 0.3,
+      "sceneId": "scene-23"
+    },
+    {
+      "index": 37,
+      "text": "I made cardamom tea.",
+      "corner": "tender",
+      "e": 0.22,
+      "t": 0.0,
+      "v": 0.72,
+      "p": 0.18,
+      "sceneId": "scene-24"
+    },
+    {
+      "index": 38,
+      "text": "I put on music and I danced badly and wonderfully badly.",
+      "corner": "joy",
+      "e": 0.72,
+      "t": 0.0,
+      "v": 0.96,
+      "p": 0.7,
+      "sceneId": "scene-25"
+    },
+    {
+      "index": 39,
+      "text": "The room at the end of the hall is gone now.",
+      "corner": "grief",
+      "e": 0.18,
+      "t": 0.1,
+      "v": 0.35,
+      "p": 0.15,
+      "sceneId": "scene-26"
+    },
+    {
+      "index": 40,
+      "text": "But I carry it.",
+      "corner": "tender",
+      "e": 0.2,
+      "t": 0.0,
+      "v": 0.72,
+      "p": 0.15,
+      "sceneId": "scene-27"
+    },
+    {
+      "index": 41,
+      "text": "And on certain afternoons, when everything goes gold, I feel it again.",
+      "corner": "tender",
+      "e": 0.22,
+      "t": 0.0,
+      "v": 0.82,
+      "p": 0.18,
+      "sceneId": "scene-27"
+    },
+    {
+      "index": 42,
+      "text": "Right here.",
+      "corner": "tender",
+      "e": 0.15,
+      "t": 0.0,
+      "v": 0.78,
+      "p": 0.1,
+      "sceneId": "scene-27"
+    }
+  ],
+  "music": {
+    "chords": {
+      "grief": [
+        48,
+        51,
+        55,
+        58
+      ],
+      "tender": [
+        60,
+        64,
+        67,
+        71
+      ],
+      "tension": [
+        60,
+        61,
+        65,
+        67
+      ],
+      "joy": [
+        64,
+        67,
+        71,
+        74
+      ]
+    },
+    "wave": {
+      "grief": "sine",
+      "tender": "sine",
+      "tension": "saw",
+      "joy": "triangle"
+    },
+    "adsr": {
+      "grief": [
+        1.2,
+        0.4,
+        0.7,
+        3.0
+      ],
+      "tender": [
+        0.7,
+        0.3,
+        0.7,
+        2.0
+      ],
+      "tension": [
+        0.05,
+        0.1,
+        0.6,
+        0.4
+      ],
+      "joy": [
+        0.3,
+        0.2,
+        0.7,
+        1.5
+      ]
+    }
+  }
+}
