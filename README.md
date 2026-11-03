@@ -39,6 +39,8 @@ This repository holds two things:
 4. **The music follows the mood.** [Tone.js](https://tonejs.github.io/) rebuilds the show's synth in the browser. Each corner has its own chord, waveform and envelope. Higher valence opens the filter and brightens the sound, tension adds resonance, lower valence adds reverb, and pace sets the tempo. The live values are shown in the bottom-left corner of the screen.
 5. **The images follow the scene.** The story has 27 distinct scenes. Each has three images generated in advance with SD Turbo from the show's original scene prompts, and the page slowly crossfades between them.
 
+An About page explains the project and its limitations.
+
 ---
 
 ## Disclaimers

@@ -14,6 +14,7 @@
 </head>
 <body>
   <main id="title-screen" class="screen is-visible" tabindex="0" aria-label="Enter">
+    <button class="about-toggle" type="button" aria-label="About this project">About</button>
     <div class="title-copy">
       <h1>The Room at the End of the Hall</h1>
       <p>Muhammad Ayan Achakzai &amp; Maria Naqvi</p>
@@ -21,7 +22,8 @@
     <span class="next-arrow" aria-hidden="true">-&gt;</span>
   </main>
 
-  <section id="begin-screen" class="screen" tabindex="0" aria-label="Begin the performance">
+  <section id="begin-screen" class="screen" tabindex="0" aria-label="Begin the performance" inert>
+    <button class="about-toggle" type="button" aria-label="About this project">About</button>
     <div class="begin-copy">
       <h2>Before you begin</h2>
       <div class="instructions">
@@ -36,7 +38,7 @@
     <span class="next-arrow" aria-hidden="true">-&gt;</span>
   </section>
 
-  <section id="performance-screen" class="screen performance" aria-live="polite">
+  <section id="performance-screen" class="screen performance" aria-live="polite" inert>
     <div id="image-box" class="image-box">
       <img id="image-a" class="image-layer is-front" alt="">
       <img id="image-b" class="image-layer" alt="">
@@ -55,11 +57,43 @@ pace     0.15
 tempo    36 bpm</pre>
   </section>
 
-  <section id="end-screen" class="screen end-screen">
+  <section id="end-screen" class="screen end-screen" inert>
+    <button class="about-toggle" type="button" aria-label="About this project">About</button>
     <div class="title-copy">
       <h1>The Room at the End of the Hall</h1>
       <p>Muhammad Ayan Achakzai &amp; Maria Naqvi</p>
       <a href="https://github.com/ayanachakzai/The-Room-at-the-End-of-the-Hall">The live system is on GitHub</a>
+    </div>
+  </section>
+
+  <section id="about-screen" class="screen about-screen" aria-labelledby="about-heading" inert>
+    <button id="close-about" class="about-toggle" type="button" aria-label="Close about this project">Close</button>
+    <div class="about-copy">
+      <h1 id="about-heading">About</h1>
+      <p>The Room at the End of the Hall is a playable version of The Living Score, a live performance by Muhammad Ayan Achakzai and Maria Naqvi, first performed at The Crypt on 11 June 2026.</p>
+      <p>As you read the story aloud, the page follows your voice word by word, and each line shifts the music and the image to match its mood.</p>
+
+      <h2>This version is hardcoded</h2>
+      <p>Everything on this site was written in advance. We decided the mood of each of the story's 43 lines: its energy, tension, pace and how positive it feels. The music is played from those values, and the 27 scenes were painted beforehand by an image model, SD Turbo, from our own scene descriptions. Your voice does not change the mood. It only tells the page where you are in the story.</p>
+
+      <h2>It can run live</h2>
+      <p>The system behind it does not need a script. In our live version, a small language model running on a laptop read each line as it was spoken and scored its mood, and the music and images were generated on the spot. That version can follow any story. We used the composed version at The Crypt because, in front of an audience, reliability mattered more than surprise. The code for both is on GitHub.</p>
+
+      <h2>A new take on storytelling</h2>
+      <p>People have always added sound and light to stories: a fire, a drum, a pianist at a silent film. This project asks what happens when the story itself plays the instruments. Imagine a book reading, a poetry night, a storytelling session or a reading in a classroom or a museum, where the room answers the reader. The music darkens when the story does, and the images arrive with the words. The reader needs no sound engineer and no cue sheet. They just read, and the room follows.</p>
+
+      <h2>The limitations</h2>
+      <p><span class="limitation-lead">Machines do not understand emotion.</span> A model can match words to patterns it has seen before, but it does not feel grief or joy, and it cannot know what a line means to the person reading it. In this version, people decided the emotions. In the live version, a model guessed them, and sometimes it guessed wrong.</p>
+      <p><span class="limitation-lead">It hears words, not voices.</span> The page turns speech into text, so your tone, your pauses, how loudly you speak, a laugh or a catch in your throat are all lost. A broken reading and a bright reading of the same line look identical to it.</p>
+      <p><span class="limitation-lead">It misses context.</span> A line like "I didn't look back" can be relief or regret, depending on everything that came before it. Scoring one line at a time, a machine often cannot tell the difference.</p>
+      <p><span class="limitation-lead">Speech recognition is uneven.</span> Accents, background noise and fast reading can make it lose its place. It only follows English, and only in some browsers.</p>
+      <p><span class="limitation-lead">The images carry the model's assumptions.</span> The image model learned from huge numbers of pictures online, so "a mother dancing in a kitchen" comes out the way the internet imagines it, which may look nothing like the mother in your story.</p>
+      <p><span class="limitation-lead">It can tell the audience what to feel.</span> Music and pictures are powerful, and used carelessly they can flatten a listener's imagination instead of deepening it. The reader's voice should stay at the centre.</p>
+      <p><span class="limitation-lead">Live takes time.</span> The live version needed a few seconds to answer each line. We came to like the delay, the machine sitting with the words before it responds, but it is a real limit.</p>
+
+      <h2>Credits</h2>
+      <p>Made by Muhammad Ayan Achakzai and Maria Naqvi for Performing Data, MSc Applied Machine Learning for Creatives, UAL Creative Computing Institute.</p>
+      <p>Code and the live system: <a href="https://github.com/ayanachakzai/The-Room-at-the-End-of-the-Hall" target="_blank" rel="noopener noreferrer">github.com/ayanachakzai/The-Room-at-the-End-of-the-Hall</a></p>
     </div>
   </section>
 

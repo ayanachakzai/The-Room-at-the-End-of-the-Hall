@@ -18,10 +18,13 @@ async function loadStory() {
   return response.json();
 }
 
-// This switches screens using the shared CSS fade without adding interface controls.
+// This switches screens using the shared CSS fade and keeps hidden controls out of keyboard navigation.
 function showScreen(screen) {
-  document.querySelectorAll(".screen").forEach((item) => item.classList.remove("is-visible"));
-  screen.classList.add("is-visible");
+  document.querySelectorAll(".screen").forEach((item) => {
+    const visible = item === screen;
+    item.classList.toggle("is-visible", visible);
+    item.inert = !visible;
+  });
 }
 
 // This accepts pointer activation and the two keyboard keys required by the brief.
@@ -102,6 +105,8 @@ async function main() {
   const beginScreen = document.querySelector("#begin-screen");
   const performanceScreen = document.querySelector("#performance-screen");
   const endScreen = document.querySelector("#end-screen");
+  const aboutScreen = document.querySelector("#about-screen");
+  const closeAbout = document.querySelector("#close-about");
   const status = document.querySelector("#status-line");
   const { protocol, hostname } = window.location;
   const addressCanListen = protocol === "https:"
@@ -128,6 +133,39 @@ async function main() {
   let story;
   let speechFailed = false;
   let renderStory;
+  let returnScreen;
+  let returnFocus;
+
+  const openAbout = (event) => {
+    event.stopPropagation();
+    returnScreen = event.currentTarget.closest(".screen");
+    returnFocus = event.currentTarget;
+    showScreen(aboutScreen);
+    aboutScreen.scrollTop = 0;
+    closeAbout.focus();
+  };
+
+  const leaveAbout = (event) => {
+    event?.stopPropagation();
+    if (!aboutScreen.classList.contains("is-visible")) return;
+    showScreen(returnScreen);
+    returnFocus.focus();
+  };
+
+  document.querySelectorAll(".about-toggle").forEach((button) => {
+    button.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") event.stopPropagation();
+    });
+  });
+  document.querySelectorAll("#title-screen .about-toggle, #begin-screen .about-toggle, #end-screen .about-toggle")
+    .forEach((button) => button.addEventListener("click", openAbout));
+  closeAbout.addEventListener("click", leaveAbout);
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && aboutScreen.classList.contains("is-visible")) {
+      event.preventDefault();
+      leaveAbout(event);
+    }
+  });
 
   // This replaces the reading line with a single useful message when listening fails.
   const showListeningMessage = (message) => {
